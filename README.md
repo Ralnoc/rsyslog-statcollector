@@ -32,19 +32,19 @@ module(load="impstats"
        interval="60"
        severity="7"
        log.file="/var/log/rsyslog-stats") # Provides Rsyslog Stats capability
-module(load="imptcp" Threads="32")        # provides Plain TCP syslog reception
-module(load="imudp" Threads="32")         # provides UDP syslog reception
+module(load="imptcp")        # provides Plain TCP syslog reception
+module(load="imudp")         # provides UDP syslog reception
 
 # Local Log Processing Ruleset
 ruleset(name="local.main_Q"){
 
 # Log all kernel messages to the console.
 # Logging much else clutters up the screen.
-# kern.*                                                 action(name="local_kern"
-#                                                               type="omfile"
-#                                                               FileCreateMode="0644"
-#                                                               DirCreateMode="0755"
-#                                                               File="/dev/console")
+# kern.*                                                               action(name="local.kern"
+#                                                                             type="omfile"
+#                                                                             FileCreateMode="0644"
+#                                                                             DirCreateMode="0755"
+#                                                                             File="/dev/console")
 
 # Log anything (except mail) of level info or higher.
 # Don't log private authentication messages!
@@ -55,42 +55,42 @@ ruleset(name="local.main_Q"){
                                                                               File="/log/local/messages")
 
 # The authpriv file has restricted access.
-authpriv.*                                              action(name="local.authpriv"
-                                                               type="omfile"
-                                                               FileCreateMode="0600"
-                                                               DirCreateMode="0755"
-                                                               File="/log/local/secure")
+authpriv.*                                                             action(name="local.authpriv"
+                                                                              type="omfile"
+                                                                              FileCreateMode="0600"
+                                                                              DirCreateMode="0755"
+                                                                              File="/log/local/secure")
 
 # Log all the mail messages in one place.
-mail.*                                                  action(name="local.mail"
-                                                               type="omfile"
-                                                               FileCreateMode="0644"
-                                                               DirCreateMode="0755"
-                                                               File="/log/local/maillog")
+mail.*                                                                 action(name="local.mail"
+                                                                              type="omfile"
+                                                                              FileCreateMode="0644"
+                                                                              DirCreateMode="0755"
+                                                                              File="/log/local/maillog")
 
 # Log cron stuff
-cron.*                                                  action(name="local.cron"
-                                                               type="omfile"
-                                                               FileCreateMode="0644"
-                                                               DirCreateMode="0755"
-                                                               File="/log/local/cron")
+cron.*                                                                 action(name="local.cron"
+                                                                              type="omfile"
+                                                                              FileCreateMode="0644"
+                                                                              DirCreateMode="0755"
+                                                                              File="/log/local/cron")
 
 # Everybody gets emergency messages
-*.emerg                                                 :omusrmsg:*
+*.emerg                                                                :omusrmsg:*
 
 # Save news errors of level crit and higher in a special file.
-uucp,news.crit                                          action(name="local.uucp_news"
-                                                               type="omfile"
-                                                               FileCreateMode="0644"
-                                                               DirCreateMode="0755"
-                                                               File="/log/local/spooler")
+uucp,news.crit                                                         action(name="local.uucp_news"
+                                                                              type="omfile"
+                                                                              FileCreateMode="0644"
+                                                                              DirCreateMode="0755"
+                                                                              File="/log/local/spooler")
 
 # Save boot messages also to boot.log
-local7.*                                                action(name="local.bootlog"
-                                                               type="omfile"
-                                                               FileCreateMode="0644"
-                                                               DirCreateMode="0755"
-                                                               File="/log/local/boot.log")
+local7.*                                                               action(name="local.bootlog"
+                                                                              type="omfile"
+                                                                              FileCreateMode="0644"
+                                                                              DirCreateMode="0755"
+                                                                              File="/log/local/boot.log")
 }
 
 ```
